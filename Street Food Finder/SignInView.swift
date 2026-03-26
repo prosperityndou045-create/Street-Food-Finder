@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct SignInView: View {
     @State private var username = ""
     @State private var password = ""
     @State private var rememberMe = false
-    
+    @State private var showAlert = false  // <-- state for alert
+
     var body: some View {
         NavigationStack {
             ZStack {
@@ -19,8 +22,8 @@ struct SignInView: View {
                     .opacity(0.2)
                     .edgesIgnoringSafeArea(.all)
             }
+            
             VStack(spacing: 40) {
-                
                 Image(systemName: "person.2.circle.fill")
                     .resizable()
                     .scaledToFit()
@@ -34,7 +37,6 @@ struct SignInView: View {
                     .font(.subheadline)
                     .foregroundColor(.black)
             }
-            
             .padding(.top, 40)
             
             VStack(alignment: .leading, spacing: 25) {
@@ -47,7 +49,6 @@ struct SignInView: View {
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                     Divider()
-                    
                 }
                 
                 VStack(alignment: .leading, spacing: 8) {
@@ -71,15 +72,15 @@ struct SignInView: View {
                 .tint(.purple.opacity(0.4))
                 
                 Spacer()
-                
             }
             .padding(.leading, 30)
-              
+            
             Spacer()
             
             VStack(spacing: 20) {
                 Button(action: {
-                    
+                    // This triggers the alert
+                    showAlert = true
                 }) {
                     Text("Login to my Account")
                         .fontWeight(.semibold)
@@ -89,12 +90,16 @@ struct SignInView: View {
                         .foregroundColor(.white)
                         .cornerRadius(10)
                 }
+                .alert("Success", isPresented: $showAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text("You have successfully logged in!")
+                }
                 
                 NavigationLink(destination: SignUpView()) {
                     Text("Signup for New Account")
                         .font(.footnote)
                         .foregroundColor(.black)
-                    
                 }
             }
             .padding(.horizontal, 60)
