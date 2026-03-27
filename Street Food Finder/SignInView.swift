@@ -79,7 +79,7 @@ struct SignInView: View {
             
             VStack(spacing: 20) {
                 Button(action: {
-                    // This triggers the alert
+                
                     showAlert = true
                 }) {
                     Text("Login to my Account")

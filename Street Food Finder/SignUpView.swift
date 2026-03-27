@@ -113,6 +113,7 @@ struct CustomerSignUpView: View {
             Form {
                 Section(header: Text("Personal Info")) {
                     TextField("Full Name (e.g., Prosperity Ndou)", text: $name)
+                        .autocapitalization(.words)
                     TextField("Email (e.g., props@example.com)", text: $email)
                         .autocapitalization(.none)
                     TextField("Phone (e.g., +263775757654)", text: $phone)
