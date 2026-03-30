@@ -13,7 +13,7 @@ struct SignInView: View {
     @State private var username = ""
     @State private var password = ""
     @State private var rememberMe = false
-    @State private var showAlert = false  // <-- state for alert
+    @State private var showAlert = false
 
     var body: some View {
         NavigationStack {
@@ -93,7 +93,7 @@ struct SignInView: View {
                 .alert("Success", isPresented: $showAlert) {
                     Button("OK", role: .cancel) {}
                 } message: {
-                    Text("You have successfully logged in!")
+                    Text("You have successfully logged in as \(username)")
                 }
                 
                 NavigationLink(destination: SignUpView()) {
