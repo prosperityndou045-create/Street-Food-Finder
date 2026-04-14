@@ -2,7 +2,7 @@
 //  SignUpView.swift
 //  Street Food Finder
 //
-//  Created by Prosperity on 25/3/2026.
+//  Created by Prosperity on 14/4/2026.
 //
 
 import SwiftUI
@@ -150,10 +150,6 @@ struct CustomerDashboardView: View {
         }
     }
 }
-struct Vendor {
-    var name: String
-    var businessName: String
-}
 
 struct VendorSignUpView: View {
     @State private var name = ""
@@ -180,7 +176,7 @@ struct VendorSignUpView: View {
             
             Button("Sign Up") {
                 print("Vendor signed up")
-                vendor = Vendor(name: name, businessName: businessName)
+                vendor = Vendor(name: name, businessName: businessName, latitude: 0.0, longitude: 0.0)
                     goToDashboard = true
             }
             .disabled(name.isEmpty || email.isEmpty || businessName.isEmpty || location.isEmpty)
@@ -284,7 +280,7 @@ struct VendorProfileView: View {
 
 struct VendorProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        VendorProfileView(vendor: Vendor.init(name: "Test", businessName: "Test Business)"))
+        VendorProfileView(vendor: Vendor.init(name: "Test", businessName: "Test, Business)",latitude:   0.0, longitude: 0.0))
     }
 }
 struct SupplierProfileManagement: View {
@@ -455,4 +451,5 @@ struct SupplierSignUpView: View {
 #Preview {
     SignUpView()
 }
+
 

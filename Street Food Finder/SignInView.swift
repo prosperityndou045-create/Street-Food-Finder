@@ -5,7 +5,6 @@
 //  Created by Prosperity on 25/3/2026.
 //
 
-import SwiftUI
 
 import SwiftUI
 
@@ -13,101 +12,89 @@ struct SignInView: View {
     @State private var username = ""
     @State private var password = ""
     @State private var rememberMe = false
-    @State private var showAlert = false
+    @State private var goToSignUp = false
 
     var body: some View {
         NavigationStack {
             ZStack {
                 Color(.brown)
                     .opacity(0.2)
-                    .edgesIgnoringSafeArea(.all)
-            }
-            
-            VStack(spacing: 40) {
-                Image(systemName: "person.2.circle.fill")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 80, height: 80)
-                    .foregroundColor(.red)
-                
-                Text("Login")
-                    .font(.system(size: 28, weight: .bold))
-                
-                Text("Welcome back, login to continue!")
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-            }
-            .padding(.top, 40)
-            
-            VStack(alignment: .leading, spacing: 25) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Username")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                    
-                    TextField("", text: $username)
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                    Divider()
-                }
-                
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Password")
-                        .font(.caption)
-                        .foregroundColor(.black)
-                    SecureField("", text: $password)
-                    Divider()
-                }
-            }
-            .padding(.top, 60)
-            .padding(.horizontal, 30)
-            
-            HStack {
-                Toggle(isOn: $rememberMe) {
-                    Text("Remember me")
+                    .ignoresSafeArea()
+
+                VStack(spacing: 25) {
+
+                    VStack(spacing: 15) {
+                        Image(systemName: "person.2.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
+                            .foregroundColor(.red)
+
+                        Text("Login")
+                            .font(.system(size: 28, weight: .bold))
+                            .padding(10)
+                        
+                        Text("Welcome back, login to continue!")
+                            .font(.subheadline)
+                            .padding(10)
+                    }
+
+                    VStack(alignment: .leading, spacing: 20) {
+
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Username")
+                                .font(.caption)
+
+                            TextField("Enter username", text: $username)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                        .padding(10)
+                        
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text("Password")
+                                .font(.caption)
+
+                            SecureField("Enter password", text: $password)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                    }
+
+                    Toggle("Remember me", isOn: $rememberMe)
                         .font(.footnote)
-                        .foregroundColor(.black)
+
+                    Button(action: {
+                        if !username.isEmpty && !password.isEmpty {
+                            goToSignUp = true
+                        }
+                    }) {
+                        Text("Login to my Account")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                    }
+                    .padding(20)
+              
+                    NavigationLink(destination: SignUpView()) {
+                        Text("Signup for New Account")
+                            .font(.footnote)
+                    }
+
+                    Spacer()
                 }
-                .toggleStyle(.button)
-                .tint(.purple.opacity(0.4))
-                
-                Spacer()
+                .padding()
             }
-            .padding(.leading, 30)
-            
-            Spacer()
-            
-            VStack(spacing: 20) {
-                Button(action: {
-                
-                    showAlert = true
-                }) {
-                    Text("Login to my Account")
-                        .fontWeight(.semibold)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
-                }
-                .alert("Success", isPresented: $showAlert) {
-                    Button("OK", role: .cancel) {}
-                } message: {
-                    Text("You have successfully logged in as \(username)")
-                }
-                
-                NavigationLink(destination: SignUpView()) {
-                    Text("Signup for New Account")
-                        .font(.footnote)
-                        .foregroundColor(.black)
-                }
+        
+            .navigationDestination(isPresented: $goToSignUp) {
+                SignUpView()
             }
-            .padding(.horizontal, 60)
         }
     }
 }
 
 #Preview {
     SignInView()
+    
 }
-
