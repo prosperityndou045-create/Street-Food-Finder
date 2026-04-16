@@ -1,15 +1,15 @@
 //
-//  VendorView file .swift
+//  VendorVIewFile2.swift
 //  Street Food Finder
 //
-//  Created by Prosperity on 14/4/2026.
+//  Created by Prosperity on 15/4/2026.
 //
 
 import SwiftUI
 import MapKit
 
 struct Vendor: Identifiable {
-    let id = UUID()   
+    let id = UUID()
     let name: String
     let businessName: String
     let latitude: Double
@@ -19,3 +19,4 @@ struct Vendor: Identifiable {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
+

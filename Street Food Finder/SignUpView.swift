@@ -9,63 +9,60 @@ import SwiftUI
 import PhotosUI
 
 struct SignUpView: View {
-    @State private var selectedRole: String? = nil
-    @State private var goToNext = false
-    
-    var body: some View {
-        NavigationStack {
-            ZStack {
-                Image("color")
-                    .resizable()
-                    .frame(width: 400, height: 900)
-                   
-                
-                VStack(spacing: 20) {
-                    
-                    Text("Choose your role")
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(.black)
-                    
-                    RoleCard(title: "Customer", icon: "person", isSelected: selectedRole == "Customer") {
-                        selectedRole = "Customer"
-                    }
-                    
-                    RoleCard(title: "Vendor", icon: "storefront", isSelected: selectedRole == "Vendor") {
-                        selectedRole = "Vendor"
-                    }
-                    
-                    RoleCard(title: "Supplier", icon: "car", isSelected: selectedRole == "Supplier") {
-                        selectedRole = "Supplier"
-                    }
-                    
-                    Button("Continue") {
-                        goToNext = true
-                    }
-                    .disabled(selectedRole == nil)
-                    .buttonStyle(.borderedProminent)
-                    .padding(.top)
-                    
-                   
-                    .navigationDestination(isPresented: $goToNext) {
-                        switch selectedRole {
-                        case "Customer":
-                            CustomerSignUpView()
-                        case "Vendor":
-                            VendorSignUpView()
-                        case "Supplier":
-                            SupplierSignUpView()
-                        default:
-                            Text("Select a role")
-                        }
-                    }
+@State private var selectedRole: String? = nil
+@State private var goToNext = false
+
+var body: some View {
+    NavigationStack {
+        ZStack {
+            Image("color")
+                .resizable()
+                .ignoresSafeArea()
+
+            VStack(spacing: 20) {
+                Text("Choose your role")
+                    .font(.title)
+                    .bold()
+
+                RoleCard(title: "Customer", icon: "person",
+                         isSelected: selectedRole == "Customer") {
+                    selectedRole = "Customer"
                 }
-                .padding()
+
+                RoleCard(title: "Vendor", icon: "storefront",
+                         isSelected: selectedRole == "Vendor") {
+                    selectedRole = "Vendor"
+                }
+
+                RoleCard(title: "Supplier", icon: "car",
+                         isSelected: selectedRole == "Supplier") {
+                    selectedRole = "Supplier"
+                }
+
+                Button("Continue") {
+                    goToNext = true
+                }
+                .disabled(selectedRole == nil)
+                .buttonStyle(.borderedProminent)
+                .padding(.top)
+            }
+            .padding()
+        }
+        .navigationDestination(isPresented: $goToNext) {
+            switch selectedRole {
+            case "Customer":
+                CustomerSignUpView()
+            case "Vendor":
+                VendorSignUpView()
+            case "Supplier":
+                SupplierSignUpView()
+            default:
+                Text("Select a role")
             }
         }
     }
-    
-  
+}
+}
     struct RoleCard: View {
         let title: String
         let icon: String
@@ -92,7 +89,7 @@ struct SignUpView: View {
             }
         }
     }
-}
+
 
     struct User {
         var name: String
@@ -104,10 +101,30 @@ struct CustomerSignUpView: View {
     @State private var name = ""
     @State private var email = ""
     @State private var phone = ""
-    @State private var goToDashboard = false
+    @State private var goToDashBoard = false
     @State private var createdUser: User? = nil
     @State private var password = ""
-    
+    @State private var foods: [Food] = [
+        Food(name:"Pizza",
+             vendor: "Nkosi",
+             price: 0.0,
+             description:"Cheesy pizza",
+             image: "",
+             reviews: [],
+             latitude: -17.82,
+             longitude: 31.05,
+             rating: 0.0),
+        
+        Food (name:"Burger",
+        vendor: "Mthethwa",
+        price: 0.0,
+        description:"Double Burger",
+        image: "",
+        reviews: [],
+        latitude: -17.82,
+        longitude: 31.05,
+        rating: 0.0),
+    ]
     var body: some View {
         
             Form {
@@ -122,34 +139,23 @@ struct CustomerSignUpView: View {
                 .foregroundColor(.black)
                 Button("Sign Up") {
                     createdUser = User(name: name, email: email)
-                        goToDashboard = true
+                        goToDashBoard = true
                     print("Customer successfully signed up")
                 }
                 .disabled(name.isEmpty || email.isEmpty || phone.isEmpty || password.isEmpty)
                 .buttonStyle(.borderedProminent)
                 
                 
-            }.navigationDestination(isPresented: $goToDashboard) {
+            }.navigationDestination(isPresented: $goToDashBoard) {
                 if let user = createdUser {
-                    CustomerDashboardView(user: user)
+                    CustomersView(user: user, foods:foods)
                 }
             }
+
             .navigationTitle("Customer Sign Up")
         }
     }
-struct CustomerDashboardView: View {
-    let user: User
 
-    var body: some View {
-        VStack(spacing: 20) {
-            Text("Welcome, \(user.name) 👋")
-                .font(.largeTitle)
-                .bold()
-
-            Text("Email: \(user.email)")
-        }
-    }
-}
 
 struct VendorSignUpView: View {
     @State private var name = ""
@@ -280,17 +286,26 @@ struct VendorProfileView: View {
 
 struct VendorProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        VendorProfileView(vendor: Vendor.init(name: "Test", businessName: "Test, Business)",latitude:   0.0, longitude: 0.0))
+        VendorsView(
+            vendors: [
+                Vendor(
+                    name: "Test",
+                    businessName: "Test Business",
+                    latitude: 0.0,
+                    longitude: 0.0
+                )
+            ]
+        )
     }
 }
 struct SupplierProfileManagement: View {
             var supplier: Supplier
-            @State private var businessName = "Vegetables Supplies"
-            @State private var contactPerson = "Proe Ndou"
-            @State private var email = "supplier@example.com"
-            @State private var phone = "+263 77 123 4567"
-            @State private var location = "Victoria Falls, Zimbabwe"
-            @State private var businessType = "Wholesaler"
+            @State private var businessName = ""
+            @State private var contactPerson = ""
+            @State private var email = ""
+            @State private var phone = ""
+            @State private var location = ""
+            @State private var businessType = ""
             
            
             @State private var products: [Product] = [
@@ -366,7 +381,7 @@ struct SupplierProfileManagement: View {
                         }
                         .padding()
                     }
-                    .navigationTitle("Supplier Dashboard")
+                    .navigationTitle("Supplier Profiles")
                 }
             }
             
@@ -395,61 +410,56 @@ struct SupplierProfileView_Previews: PreviewProvider {
 
 #Preview {
     SupplierProfileManagement(
-        supplier: Supplier(companyName: "Test Co", supplyType: "Vegetables")
-    )
+        supplier: Supplier(companyName: "Test Co", supplyType: "Vegetables") )
+    
 }
+
+
 
 struct Supplier {
     var companyName: String
     var supplyType: String
 }
+
 struct SupplierSignUpView: View {
     @State private var companyName = ""
     @State private var email = ""
+    @State private var supplyType = ""
+    @State private var deliveryRange = ""
+
     @State private var supplier: Supplier? = nil
     @State private var goToDashboard = false
-    @State private var supplyType = ""
- 
-    
-@State private var deliveryRange = ""
+
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Company Info")) {
-                    TextField("Company Name (e.g., SupplyCo)", text: $companyName)
-                    TextField("Email (e.g., supply@example.com)", text: $email)
-                        .autocapitalization(.none)
+                    TextField("Company Name", text: $companyName)
+                    TextField("Email", text: $email)
                 }
-                .foregroundColor(.black)
-                
+
                 Section(header: Text("Service Details")) {
-                    TextField("Supply Type (e.g., Vegetables, Meat)", text: $supplyType)
-                    TextField("Delivery Range (e.g., 10 km radius)", text: $deliveryRange)
+                    TextField("Supply Type", text: $supplyType)
+                    TextField("Delivery Range", text: $deliveryRange)
                 }
-                .foregroundStyle(Color.black)
+
                 Button("Sign Up") {
                     supplier = Supplier(companyName: companyName, supplyType: supplyType)
-                        goToDashboard = true
-                    print("Supplier signed up")
+                    goToDashboard = true
                 }
                 .disabled(companyName.isEmpty || email.isEmpty || supplyType.isEmpty || deliveryRange.isEmpty)
-                .buttonStyle(.borderedProminent)
             }
             .navigationDestination(isPresented: $goToDashboard) {
-                if let supplier = supplier{
+                if let supplier = supplier {
                     SupplierProfileManagement(supplier: supplier)
                 }
             }
-
             .navigationTitle("Supplier Sign Up")
         }
-        
     }
-    
 }
-
+ 
 #Preview {
-    SignUpView()
-}
-
+        SignUpView()
+    }
 
