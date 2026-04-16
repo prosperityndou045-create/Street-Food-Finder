@@ -14,9 +14,9 @@ struct DashBoard: View {
     var user: User = .init(name: "John Doe", email: "john@example.com")
 
     @State private var foods: [Food] = [
-        Food(name: "Burger", vendor: "Foodies Hub", price: 5.99, description: "Juicy burger", image: "fork.knife", reviews: [], latitude: -17.8292, longitude: 31.0522, rating: 4.5),
-        Food(name: "Pizza", vendor: "Pizza Palace", price: 8.49, description: "Cheesy pizza", image: "fork.knife", reviews: [], latitude: -17.8310, longitude: 31.0450, rating: 4.8),
-        Food(name: "Chicken", vendor: "Grill House", price: 6.75, description: "Grilled chicken", image: "fork.knife", reviews: [], latitude: -17.8350, longitude: 31.0600, rating: 4.2)
+        Food(name: "Burger", vendor: "Foodies Hub", price: 5.99, description: "Juicy burger", image: "burger", reviews: [], latitude: -17.8292, longitude: 31.0522, rating: 4.5),
+        Food(name: "Pizza", vendor: "Pizza Palace", price: 8.49, description: "Cheesy pizza", image: "pizza", reviews: [], latitude: -17.8310, longitude: 31.0450, rating: 4.8),
+        Food(name: "Chicken", vendor: "Grill House", price: 6.75, description: "Grilled chicken", image: "chicken", reviews: [], latitude: -17.8350, longitude: 31.0600, rating: 4.2)
     ]
 
     var body: some View {
@@ -55,7 +55,7 @@ struct DashBoard: View {
                         }
                     }
 
-                    Text("🔥 Featured Foods")
+                    Text("Featured Foods")
                         .font(.title2)
                         .bold()
                         .padding(.horizontal)
@@ -110,6 +110,7 @@ struct DashBoard: View {
     }
 }
 
+
 struct FoodHighlightBanner: View {
     let foods: [Food]
 
@@ -123,16 +124,18 @@ struct FoodHighlightBanner: View {
             HStack(spacing: 20) {
                 ForEach(foods) { food in
                     VStack(spacing: 8) {
-                        Image(systemName: food.image)
-                            .font(.largeTitle)
-                            .foregroundColor(.brown)
+
+                        Image(food.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 70)
 
                         Text(food.name)
                             .font(.headline)
 
                         Text("$\(food.price, specifier: "%.2f")")
                             .font(.subheadline)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.black)
                     }
                     .frame(width: itemWidth, height: 120)
                     .background(Color.white)
@@ -144,7 +147,7 @@ struct FoodHighlightBanner: View {
             .onAppear {
                 offset = geo.size.width
 
-                withAnimation(.linear(duration: 12).repeatForever(autoreverses: false)) {
+                withAnimation(.linear(duration: 25).repeatForever(autoreverses: false)) {
                     offset = -totalWidth
                 }
             }
@@ -153,7 +156,6 @@ struct FoodHighlightBanner: View {
         .clipped()
     }
 }
-
 struct SettingsView: View{
     var body: some View{
         Text("Setting")
