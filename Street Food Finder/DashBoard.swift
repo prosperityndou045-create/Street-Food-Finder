@@ -8,7 +8,6 @@
 import SwiftUI
 import MapKit
 
-
 struct DashBoard: View {
     @State private var searchText = ""
     var user: User = .init(name: "John Doe", email: "john@example.com")
@@ -70,7 +69,6 @@ struct DashBoard: View {
         }
     }
 
-
     var header: some View {
         HStack {
             Text("Dashboard")
@@ -101,7 +99,7 @@ struct DashBoard: View {
             Text(title).bold()
             Spacer()
             Image(systemName: "chevron.right")
-                .foregroundColor(color)
+                .foregroundColor(.blue)
         }
         .padding()
         .background(Color.white)
@@ -109,7 +107,6 @@ struct DashBoard: View {
         .padding(.horizontal)
     }
 }
-
 
 struct FoodHighlightBanner: View {
     let foods: [Food]
@@ -158,7 +155,7 @@ struct FoodHighlightBanner: View {
 }
 struct SettingsView: View{
     var body: some View{
-        Text("Setting")
+        Text("Settings")
     }
 }
 #Preview {

@@ -4,6 +4,7 @@
 //
 //  Created by Prosperity on 15/4/2026.
 //
+
 import SwiftUI
 import MapKit
 
@@ -23,45 +24,75 @@ struct CustomersView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 15) {
+        ZStack {
 
-                TextField("Search meals...", text: $searchText)
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(10)
+            LinearGradient(
+                colors: [
+                    Color.brown.opacity(0.25),
+                    Color.white.opacity(0.95)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
 
-                Map(position: .constant(MapCameraPosition.region(region))) {
-                    ForEach(filteredFoods) { food in
-                        Annotation(food.name, coordinate: CLLocationCoordinate2D(
-                            latitude: food.latitude,
-                            longitude: food.longitude
-                        )) {
-                            Image(systemName: "mappin.circle.fill")
-                                .foregroundColor(.red)
+            ScrollView {
+                VStack(spacing: 15) {
+
+                    TextField("Search meals...", text: $searchText)
+                        .padding()
+                        .background(Color.white.opacity(0.8))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.brown.opacity(0.3))
+                        )
+
+                    Map(position: .constant(MapCameraPosition.region(region))) {
+                        ForEach(filteredFoods) { food in
+                            Annotation(food.name, coordinate: CLLocationCoordinate2D(
+                                latitude: food.latitude,
+                                longitude: food.longitude
+                            )) {
+                                Image(systemName: "mappin.circle.fill")
+                                    .foregroundColor(.brown)
+                            }
                         }
                     }
-                }
-                .frame(height: 250)
-                .cornerRadius(12)
+                    .frame(height: 250)
+                    .cornerRadius(12)
 
-                ForEach(filteredFoods) { food in
-                    HStack {
-                        Image(systemName: "fork.knife")
-                        Text(food.name)
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .foregroundColor(.gray)
+                    ForEach(filteredFoods) { food in
+                        HStack {
+
+                            Image(food.image)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 20, height: 20)
+                                .clipped()
+                                .cornerRadius(8)
+                          
+                            Text(food.name)
+                                .foregroundColor(.black)
+
+                            Spacer()
+
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.black.opacity(0.6))
+                        }
+                        .padding()
+                        .background(Color.white.opacity(0.7))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.brown.opacity(0.2))
+                        )
                     }
-                    .padding()
-                    .background(Color(.systemGray6))
-                    .cornerRadius(10)
                 }
+                .padding()
             }
-            .padding()
         }
         .navigationTitle("Customers")
     }
 }
-
-
+                  

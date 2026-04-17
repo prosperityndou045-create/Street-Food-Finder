@@ -8,9 +8,7 @@
 
 import SwiftUI
 
-import SwiftUI
 internal import Combine
-
 struct Conversation: Identifiable {
     var id: String
     var participantIds: [String]
@@ -45,7 +43,6 @@ class ThemeManager: ObservableObject {
         AppTheme(name: "Black", primaryColor: .black)
     ]
 }
-
 
 struct ChatView: View {
     var conversationId: String

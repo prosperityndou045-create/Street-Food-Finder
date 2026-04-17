@@ -17,9 +17,16 @@ struct SignInView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(.brown)
-                    .opacity(0.2)
-                    .ignoresSafeArea()
+
+                LinearGradient(
+                    colors: [
+                        Color.brown.opacity(0.30),
+                        Color.white.opacity(0.95)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
 
                 VStack(spacing: 25) {
 
@@ -32,35 +39,44 @@ struct SignInView: View {
 
                         Text("Login")
                             .font(.system(size: 28, weight: .bold))
-                            .padding(10)
-                        
+                            .foregroundColor(.black.opacity(0.9))
+
                         Text("Welcome back, login to continue!")
                             .font(.subheadline)
-                            .padding(10)
+                            .foregroundColor(.black.opacity(0.8))
                     }
+                    .padding(20)
 
                     VStack(alignment: .leading, spacing: 20) {
 
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Username")
-                                .font(.caption)
+                                .font(.callout)
+                                .foregroundColor(.black)
 
                             TextField("Enter username", text: $username)
                                 .textFieldStyle(.roundedBorder)
                         }
-                        .padding(10)
-                        
+                        .padding(18)
+                        .background(Color.white.opacity(0.6))
+                        .cornerRadius(10)
+
                         VStack(alignment: .leading, spacing: 5) {
                             Text("Password")
-                                .font(.caption)
+                                .font(.callout)
+                                .foregroundColor(.black)
 
                             SecureField("Enter password", text: $password)
                                 .textFieldStyle(.roundedBorder)
                         }
+                        .padding(18)
+                        .background(Color.white.opacity(0.6))
+                        .cornerRadius(10)
                     }
 
                     Toggle("Remember me", isOn: $rememberMe)
                         .font(.footnote)
+                        .tint(.blue)
 
                     Button(action: {
                         if !username.isEmpty && !password.isEmpty {
@@ -74,27 +90,28 @@ struct SignInView: View {
                             .background(Color.red)
                             .foregroundColor(.white)
                             .cornerRadius(10)
+                            .shadow(color: .brown.opacity(0.4), radius: 5, x: 0, y: 3)
                     }
-                    .padding(20)
-              
+                    .padding(.horizontal, 20)
+
                     NavigationLink(destination: SignUpView()) {
                         Text("Signup for New Account")
                             .font(.footnote)
+                            .foregroundColor(.blue)
                     }
 
                     Spacer()
                 }
                 .padding()
             }
-        
+
             .navigationDestination(isPresented: $goToSignUp) {
                 SignUpView()
             }
         }
     }
 }
-
 #Preview {
     SignInView()
-    
+
 }
