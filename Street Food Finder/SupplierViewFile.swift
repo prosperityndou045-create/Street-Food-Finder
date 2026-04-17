@@ -8,7 +8,6 @@
 import SwiftUI
 import MapKit
 
-
 struct SuppliersView: View {
     let foods: [Food]
     
@@ -29,14 +28,15 @@ struct SuppliersView: View {
                                 latitude: food.latitude,
                                 longitude: food.longitude
                                )) {
-                                   
-                                   Text(food.vendor)
-                                       .font(.caption)
-                                       .padding(6)
-                                       .background(Color.white)
-                                       .cornerRadius(6)
-                                       .shadow(radius: 2)
-                               }
+                        
+                        Text(food.vendor)
+                            .font(.caption)
+                            .padding(6)
+                            .foregroundColor(.white)
+                            .background(Color.brown)
+                            .cornerRadius(6)
+                            .shadow(radius: 2)
+                    }
                 }
             }
             .frame(height: 300)
@@ -45,6 +45,17 @@ struct SuppliersView: View {
             
             Spacer()
         }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color.brown.opacity(0.35),
+                    Color.white.opacity(0.9)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
         .navigationTitle("Suppliers")
         .navigationBarTitleDisplayMode(.inline)
     }

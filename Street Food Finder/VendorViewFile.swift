@@ -43,7 +43,9 @@ struct VendorsView: View {
 
             if let vendor = selectedVendor {
                 VStack(alignment: .leading) {
-                    Text(vendor.name).font(.headline)
+                    Text(vendor.name)
+                        .font(.headline)
+                    
                     Text(vendor.businessName)
                         .foregroundColor(.gray)
                 }
@@ -55,9 +57,17 @@ struct VendorsView: View {
 
             Spacer()
         }
+        .background(
+            LinearGradient(
+                colors: [
+                    Color.brown.opacity(0.35),
+                    Color.white.opacity(0.9)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+        )
         .navigationTitle("Vendors")
     }
 }
-
-
-
