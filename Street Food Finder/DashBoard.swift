@@ -144,7 +144,7 @@ struct FoodHighlightBanner: View {
             .onAppear {
                 offset = geo.size.width
 
-                withAnimation(.linear(duration: 25).repeatForever(autoreverses: false)) {
+                withAnimation(.linear(duration: 10).repeatForever(autoreverses: false)) {
                     offset = -totalWidth
                 }
             }
