@@ -1,7 +1,6 @@
 //
 //  WelcomeView.swift
 //  Street Food Finder
-//
 //  Created by Prosperity on 25/3/2026.
 //
 
