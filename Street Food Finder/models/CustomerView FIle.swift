@@ -1,16 +1,16 @@
-//
+
 //  CustomerView FIle.swift
 //  Street Food Finder
 //
 //  Created by Prosperity on 15/4/2026.
-//
+
 
 import SwiftUI
 import MapKit
 
 struct CustomersView: View {
-    @State var user: User
-    @State var foods: [Food]
+ @State var user: User
+ @State var foods: [Food]
 
     @State private var searchText = ""
     @State private var region = MKCoordinateRegion(

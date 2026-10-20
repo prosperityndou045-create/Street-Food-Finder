@@ -1,7 +1,6 @@
 //
 //  FoodReviewAndRating.swift
 //  Street Food Finder
-//
 //  Created by Prosperity on 30/3/2026.
 
 import SwiftUI

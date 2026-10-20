@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct DashBoard: View {
+struct DashBoardView: View {
     @State private var searchText = ""
     var user: User = .init(name: "John Doe", email: "john@example.com")
 
@@ -159,5 +159,5 @@ struct SettingsView: View{
     }
 }
 #Preview {
-    DashBoard()
+    DashBoardView()
 }

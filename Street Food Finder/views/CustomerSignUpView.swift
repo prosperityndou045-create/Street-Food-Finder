@@ -57,11 +57,13 @@ struct CustomerSignUpView: View {
                 
             }.navigationDestination(isPresented: $goToDashBoard) {
                 if let user = createdUser {
-                    CustomersView(user: user, foods:foods)
+                    CustomersView(user: user,foods: foods)
+
                 }
             }
 
             .navigationTitle("Customer Sign Up")
         }
     }
+
 
