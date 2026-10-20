@@ -73,41 +73,6 @@ struct SignUpView: View {
         }
     }
 }
-
-struct RoleCard: View {
-    let title: String
-    let icon: String
-    let isSelected: Bool
-    let action: () -> Void
-
-    var body: some View {
-        Button(action: action) {
-            HStack {
-                Image(systemName: icon)
-                    .foregroundColor(isSelected ? .blue : .brown)
-
-                Text(title)
-                    .bold()
-                    .foregroundColor(isSelected ? .blue : .brown)
-
-                Spacer()
-            }
-            .padding()
-            .frame(maxWidth: .infinity)
-            .background(
-                isSelected
-                ? Color.brown.opacity(0.25)
-                : Color.white.opacity(0.6)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(isSelected ? Color.brown : Color.clear, lineWidth: 2)
-            )
-            .cornerRadius(10)
-        }
-    }
-}
-
 struct User {
     var name: String
     var email: String
@@ -236,7 +201,39 @@ struct SupplierProfileManagement: View {
         }
     }
 }
-    #Preview {
-            SignUpView()
-        }
     
+
+struct RoleCard: View {
+    let title: String
+    let icon: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                Image(systemName: icon)
+                    .foregroundColor(isSelected ? .blue : .brown)
+
+                Text(title)
+                    .bold()
+                    .foregroundColor(isSelected ? .blue : .brown)
+
+                Spacer()
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .background(
+                isSelected
+                ? Color.brown.opacity(0.25)
+                : Color.white.opacity(0.6)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(isSelected ? Color.brown : Color.clear, lineWidth: 2)
+            )
+            .cornerRadius(10)
+        }
+    }
+}
+
